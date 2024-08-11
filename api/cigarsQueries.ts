@@ -1,7 +1,7 @@
 import { Cigar, CigarResponse } from "@/types/cigarTypes";
 import axios from "axios";
 
-const apiUrl = process.env.BACKEND_URL;
+const apiUrl = process.env.EXPO_PUBLIC_BACKEND_URL;
 
 export async function getAllCigarsQuery(): Promise<Cigar[]> {
   return axios.get<CigarResponse[]>(`${apiUrl}/cigars`)
