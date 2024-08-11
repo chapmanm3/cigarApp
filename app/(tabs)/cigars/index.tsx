@@ -17,6 +17,12 @@ export default function Cigar() {
       .finally(() => setIsLoading(false))
   }, [])
 
+  if (isLoading) {
+    return (
+      <ActivityIndicator />
+    )
+  }
+
   return (
     <View
       style={{
@@ -25,20 +31,18 @@ export default function Cigar() {
         alignItems: "center",
       }}
     >
-      {isLoading ?
-        <ActivityIndicator />
-        : <View
-          style={{
-            width: '50%',
-            flex: 1,
-          }}
-        >
-          <FlatList
-            data={cigars}
-            renderItem={({ item }) => <CigarCard cigar={item} />}
-            keyExtractor={(item) => item.id.toString()}
-          />
-        </View>}
+      <View
+        style={{
+          width: '50%',
+          flex: 1,
+        }}
+      >
+        <FlatList
+          data={cigars}
+          renderItem={({ item }) => <CigarCard cigar={item} />}
+          keyExtractor={(item) => item.id.toString()}
+        />
+      </View>
     </View>
   );
 }

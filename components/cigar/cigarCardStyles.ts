@@ -17,6 +17,8 @@ export const cigarCardStyles = StyleSheet.create({
     padding: 10,
   },
   textContainer: {
-    flex: 3
+    flex: 3,
+    textAlign: 'center',
+    justifyContent: 'center'
   }
 })
