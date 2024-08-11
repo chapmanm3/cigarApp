@@ -2,19 +2,30 @@ import { TabBarIcon } from '@/components/navigation/TabBarIcon';
 import { TabBarMaterial } from '@/components/navigation/TabBarMaterial';
 import { TabBarMaterialCommunity } from '@/components/navigation/TabBarMaterialCommunity';
 import { Tabs } from 'expo-router';
+import { Text } from 'react-native';
 
 export default function TabLayout() {
   return (
-    <Tabs>
-      <Tabs.Screen 
-        name="humidor" 
+    <Tabs
+      screenOptions={{
+        headerLeft: () => (
+          <Text>Embargo</Text>
+        ),
+        headerRight: () => (
+          <Text>user img</Text>
+        ),
+        headerTitleAlign: "center",
+      }}
+    >
+      <Tabs.Screen
+        name="humidor"
         options={{
           title: "Humidor",
-          tabBarIcon: ({color, focused}) => (
+          tabBarIcon: ({ color, focused }) => (
             <TabBarIcon name="briefcase" color={color} />
           )
         }}
-        />
+      />
       <Tabs.Screen
         name="cigar"
         options={{
@@ -40,6 +51,12 @@ export default function TabLayout() {
           tabBarIcon: ({ color, focused }) => (
             <TabBarMaterialCommunity name="notebook" color={color} />
           )
+        }}
+      />
+      <Tabs.Screen
+        name='index'
+        options={{
+          href: null,
         }}
       />
     </Tabs>

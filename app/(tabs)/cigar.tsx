@@ -1,6 +1,15 @@
-import { Text, View } from "react-native";
+import { getAllCigarsQuery } from "@/api/cigarsQueries";
+import { useEffect, useState } from "react";
+import { ActivityIndicator, FlatList, Text, View } from "react-native";
 
 export default function Cigar() {
+  const [isLoading, setIsLoading] = useState(true)
+  const [cigars, setCigars] = useState([])
+
+  useEffect(() => {
+    await getAllCigarsQuery()
+  }, [])
+
   return (
     <View
       style={{
@@ -9,7 +18,11 @@ export default function Cigar() {
         alignItems: "center",
       }}
     >
-      <Text>Cigar Page</Text>
+      {isLoading ?
+        <ActivityIndicator />
+        : <FlatList
+          
+        />}
     </View>
   );
 }
