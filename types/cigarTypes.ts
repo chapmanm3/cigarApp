@@ -16,3 +16,8 @@ export type Cigar = {
   image?: string,
   humidorId?: number,
 }
+
+export type CigarForm = {
+  name: string,
+  description?: string,
+}

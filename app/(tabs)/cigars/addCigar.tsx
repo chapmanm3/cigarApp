@@ -1,3 +1,4 @@
+import AddCigarForm from "@/components/cigar/AddCigarForm";
 import { Text, View } from "react-native";
 
 export default function AddCigar() {
@@ -9,7 +10,12 @@ export default function AddCigar() {
         alignItems: "center",
       }}
     >
-      <Text>Add Cigar Page</Text>
+      <View style={{
+        width: '50%',
+        flex: 1,
+      }}>
+        <AddCigarForm />
+      </View>
     </View>
   );
 }

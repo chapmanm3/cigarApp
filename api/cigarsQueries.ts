@@ -1,4 +1,4 @@
-import { Cigar, CigarResponse } from "@/types/cigarTypes";
+import { Cigar, CigarForm, CigarResponse } from "@/types/cigarTypes";
 import axios from "axios";
 
 const apiUrl = process.env.EXPO_PUBLIC_BACKEND_URL;
@@ -22,4 +22,8 @@ export async function getAllCigarsQuery(): Promise<Cigar[]> {
       console.error(e)
       return []
     })
+}
+
+export async function postCigarForm(cigarForm: CigarForm): Promise<void> {
+  return axios.post(`${apiUrl}/createCigar`, { cigar: { ...cigarForm } })
 }
