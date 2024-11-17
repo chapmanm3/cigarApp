@@ -1,20 +1,34 @@
 import { postCigarForm } from "@/api/cigarsQueries";
 import { useState } from "react";
-import { View, Text, TextInput, Button } from "react-native";
+import { View, Text, TextInput, Button, ActivityIndicator } from "react-native";
+import Toast from "react-native-root-toast";
 import invariant from "tiny-invariant";
 
 export default function AddCigarForm() {
   const [name, setName] = useState<string>()
   const [description, setDescription] = useState<string>()
+  const [loading, setLoading] = useState<boolean>(false)
 
   const onFormSubmit = () => {
+    setLoading(true)
     invariant(name, "Name should be defined")
     invariant(description, "Description should be defined")
     const cigarForm = {
       name,
       description
     }
-    postCigarForm(cigarForm)
+    postCigarForm(cigarForm).then(() => {
+      setName('')
+      setDescription('')
+      setLoading(false)
+      Toast.show('Cigar sucessfully created')
+    })
+  }
+
+  if (loading) {
+    return (
+      <ActivityIndicator />
+    )
   }
 
   return (
