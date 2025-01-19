@@ -20,40 +20,48 @@ export default function SignUp() {
   return (
     <View style={{
       flex: 1,
-      display: 'flex',
-      flexDirection: 'column',
+      display: "flex",
+      alignItems: 'center',
     }}>
-      <Text>Email: </Text>
-      <TextInput
-        value={email ?? ''}
-        onChangeText={setEmail}
-        style={{
-          borderWidth: 2,
-          borderStyle: "solid",
-          borderColor: "#000000",
-          borderRadius: 5,
-          padding: 2,
-          margin: 10,
-        }}
-      />
-      <Text>Password: </Text>
-      <TextInput
-        value={password ?? ''}
-        onChangeText={setPassword}
-        style={{
-          borderWidth: 2,
-          borderStyle: "solid",
-          borderColor: "#000000",
-          borderRadius: 5,
-          padding: 2,
-          margin: 10,
-        }}
-      />
-      <Button
-        onPress={onSubmit}
-        title="Create Account"
-        disabled={!email || !password}
-      />
+      <View style={{
+        flex: 1,
+        display: 'flex',
+        flexDirection: 'column',
+        width: "30%",
+        margin: 10
+      }}>
+        <Text style={{ alignSelf: "flex-start" }}>Email: </Text>
+        <TextInput
+          value={email ?? ''}
+          onChangeText={setEmail}
+          style={{
+            borderWidth: 2,
+            borderStyle: "solid",
+            borderColor: "#000000",
+            borderRadius: 5,
+            padding: 2,
+            margin: 10,
+          }}
+        />
+        <Text>Password: </Text>
+        <TextInput
+          value={password ?? ''}
+          onChangeText={setPassword}
+          style={{
+            borderWidth: 2,
+            borderStyle: "solid",
+            borderColor: "#000000",
+            borderRadius: 5,
+            padding: 2,
+            margin: 10,
+          }}
+        />
+        <Button
+          onPress={onSubmit}
+          title="Create Account"
+          disabled={!email || !password}
+        />
+      </View>
     </View>
   )
 }
