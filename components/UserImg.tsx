@@ -46,12 +46,12 @@ const UserActionMenu = () => {
     >
       <MenuItem key="Create account" textValue="Create account">
         <Link href="/createAccount" asChild>
-          <MenuItemLabel size="sm">Create account</MenuItemLabel>
+          <MenuItemLabel size="sm" className="w-full">Create account</MenuItemLabel>
         </Link>
       </MenuItem>
       <MenuItem key="Sign in" textValue="Sign in">
-        <Link href="/signup" asChild>
-          <MenuItemLabel size="sm">Sign in</MenuItemLabel>
+        <Link href="/login" asChild>
+          <MenuItemLabel size="sm" className="w-full">Sign in</MenuItemLabel>
         </Link>
       </MenuItem>
     </Menu>

@@ -6,8 +6,6 @@ export async function signUpUser(email: string, password: string): Promise<UserC
   return createUserWithEmailAndPassword(auth, email, password)
 }
 
-export function loginUser(email: string, password: string) {
-  signInWithEmailAndPassword(auth, email, password)
-    .then((userCred: UserCredential) => { })
-    .catch(err => console.error("Fuck user signin broke: ", err))
+export function loginUser(email: string, password: string): Promise<UserCredential> {
+  return signInWithEmailAndPassword(auth, email, password)
 }
