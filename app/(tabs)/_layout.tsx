@@ -1,6 +1,8 @@
+import { HeaderRight, UserImg } from '@/components/UserImg';
 import { TabBarIcon } from '@/components/navigation/TabBarIcon';
 import { TabBarMaterial } from '@/components/navigation/TabBarMaterial';
 import { TabBarMaterialCommunity } from '@/components/navigation/TabBarMaterialCommunity';
+import { Box } from '@/components/ui/box';
 import { Tabs } from 'expo-router';
 import { Text } from 'react-native';
 
@@ -9,10 +11,12 @@ export default function TabLayout() {
     <Tabs
       screenOptions={{
         headerLeft: () => (
-          <Text>Embargo</Text>
+          <Box className='ml-2'>
+            <Text>Embargo</Text>
+          </Box>
         ),
         headerRight: () => (
-          <Text>user img</Text>
+          <HeaderRight />
         ),
         headerTitleAlign: "center",
       }}
