@@ -5,6 +5,7 @@ const UserInfoKey = 'userInfo'
 
 export const setUserInfo = async (user: User) => {
   try {
+    console.log("Writting User to local store: ", user)
     await AsyncStorage.setItem(UserInfoKey, JSON.stringify(user))
   } catch (e) {
     //TODO: Catch error
