@@ -1,5 +1,8 @@
 import { getAllCigarsQuery } from "@/api/cigarsQueries";
 import CigarCard from "@/components/cigar/CigarCard";
+import { Center } from "@/components/ui/center";
+import { Spinner } from "@/components/ui/spinner";
+import { VStack } from "@/components/ui/vstack";
 import type { Cigar } from "@/types/cigarTypes";
 import { Link } from "expo-router";
 import { useEffect, useState } from "react";
@@ -20,32 +23,17 @@ export default function Cigar() {
 
   if (isLoading) {
     return (
-      <ActivityIndicator />
+      <Spinner />
     )
   }
 
   return (
     <>
-      <View
-        style={{
-          flex: 1,
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        <View
-          style={{
-            width: '50%',
-            flex: 1,
-          }}
-        >
-          <FlatList
-            data={cigars}
-            renderItem={({ item }) => <CigarCard cigar={item} />}
-            keyExtractor={(item) => item.id.toString()}
-          />
-        </View>
-      </View>
+      <Center className="overflow-scroll">
+        <VStack space="md" className="w-full max-w-[500px] overflow-scroll">
+          {cigars.map(cigar => <CigarCard cigar={cigar} />)}
+        </VStack>
+      </Center>
       <Link href="/cigars/addCigar" asChild>
         <Pressable style={styles.addCigarButton}>
           <Text>Add Cigar</Text>

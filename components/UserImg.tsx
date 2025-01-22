@@ -3,25 +3,35 @@ import { Box } from "@/components/ui/box"
 import { Button, ButtonText } from "@/components/ui/button"
 import { Menu, MenuItem, MenuItemLabel } from "@/components/ui/menu"
 import { Link } from "expo-router"
-import { useState } from "react"
+import { User } from "firebase/auth"
+import { useEffect, useState } from "react"
+import { getUserInfo } from "./utils/asyncStorage"
 
 export const HeaderRight = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false)
+  const [userInfo, setUserInfo] = useState<User | null>(null)
+
+  useEffect(() => {
+    const loadUserData = async () => {
+      const user = await getUserInfo()
+      setUserInfo(user)
+    }
+    loadUserData()
+  }, [])
 
   return (
     <Box className="mr-2">
-      {isLoggedIn ?
-        <UserAvatar /> :
+      {userInfo !== null ?
+        <UserAvatar user={userInfo} /> :
         <UserActionMenu />
       }
     </Box>
   )
 }
 
-const UserAvatar = () => {
+const UserAvatar = ({ user }: { user: User }) => {
   return (
     <Avatar size="md">
-      < AvatarFallbackText > Jane Doe</AvatarFallbackText >
+      <AvatarFallbackText>{user.displayName}</AvatarFallbackText>
       <AvatarImage
         source={{
           uri: 'userImgUrlHere',

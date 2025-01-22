@@ -9,7 +9,7 @@ interface Props {
 export default function CigarCard({ cigar }: Props) {
 
   return (
-    <View style={cigarCardStyles.mainContainer}>
+    <View style={cigarCardStyles.mainContainer} key={cigar.id}>
       <View style={cigarCardStyles.cardImageContainer}>
         <Image style={{ height: '100%', width: '100%' }} source={require('@/assets/images/new_icon.png')} />
       </View>
