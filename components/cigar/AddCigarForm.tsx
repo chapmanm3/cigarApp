@@ -1,7 +1,7 @@
 import { postCigarForm } from "@/api/cigarsQueries";
+import { router } from "expo-router";
 import { useState } from "react";
 import { View, Text, TextInput, Button, ActivityIndicator } from "react-native";
-import Toast from "react-native-root-toast";
 import invariant from "tiny-invariant";
 
 export default function AddCigarForm() {
@@ -21,7 +21,7 @@ export default function AddCigarForm() {
       setName('')
       setDescription('')
       setLoading(false)
-      Toast.show('Cigar sucessfully created')
+      router.navigate('/cigars')
     })
   }
 
