@@ -4,7 +4,7 @@ import axios from "axios";
 const apiUrl = process.env.EXPO_PUBLIC_BACKEND_URL;
 
 export async function getAllCigarsQuery(): Promise<Cigar[]> {
-  return axios.get<CigarResponse[]>(`${apiUrl}/cigars`)
+  return axios.get<CigarResponse[]>(`${apiUrl}/cigars`, { headers: { "Auth": window.authToken } })
     .then(resp => {
       if (resp.data.length === 0) {
         return [];

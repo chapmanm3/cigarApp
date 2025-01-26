@@ -10,6 +10,8 @@ export async function loginUser(email: string, password: string): Promise<UserCr
   try {
     const user = await signInWithEmailAndPassword(auth, email, password)
     await setUserInfo(user.user)
+    const userToken = await user.user.getIdToken()
+    window.authToken = userToken
     return user
   } catch (e) {
     //track error;
