@@ -33,6 +33,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="cigars"
         options={{
+          href: "/cigars",
           title: "Cigar",
           tabBarIcon: ({ color, focused }) => (
             <TabBarMaterialCommunity name='cigar' color={color} />

@@ -1,10 +1,14 @@
+import { auth } from "@/firebaseConfig";
 import { Cigar, CigarForm, CigarResponse } from "@/types/cigarTypes";
 import axios from "axios";
 
 const apiUrl = process.env.EXPO_PUBLIC_BACKEND_URL;
 
 export async function getAllCigarsQuery(): Promise<Cigar[]> {
-  return axios.get<CigarResponse[]>(`${apiUrl}/cigars`, { headers: { "Auth": window.authToken } })
+  console.log(auth.currentUser)
+  const authToken = await auth.currentUser?.getIdToken()
+  console.log("Auth Token: ", authToken)
+  return axios.get<CigarResponse[]>(`${apiUrl}/cigars`, { headers: { "id-token": authToken } })
     .then(resp => {
       if (resp.data.length === 0) {
         return [];
@@ -25,5 +29,6 @@ export async function getAllCigarsQuery(): Promise<Cigar[]> {
 }
 
 export async function postCigarForm(cigarForm: CigarForm): Promise<void> {
-  return axios.post(`${apiUrl}/createCigar`, { cigar: { ...cigarForm } })
+  const authToken = await auth.currentUser?.getIdToken()
+  return axios.post(`${apiUrl}/createCigar`, { cigar: { ...cigarForm } }, { headers: { "id-token": authToken } })
 }
