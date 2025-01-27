@@ -28,7 +28,7 @@ export async function getAllCigarsQuery(): Promise<Cigar[]> {
     })
 }
 
-export async function postCigarForm(cigarForm: CigarForm): Promise<void> {
+export async function createCigarQuery(cigarForm: CigarForm): Promise<void> {
   const authToken = await auth.currentUser?.getIdToken()
   return axios.post(`${apiUrl}/createCigar`, { cigar: { ...cigarForm } }, { headers: { "id-token": authToken } })
 }

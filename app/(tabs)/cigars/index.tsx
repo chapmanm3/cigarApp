@@ -36,7 +36,7 @@ export default function Cigar() {
           {cigars.length > 1 ? cigars.map(cigar => <CigarCard cigar={cigar} key={cigar.id} />) : null}
         </VStack>
       </Center>
-      <Link href="/cigars/addCigar" asChild>
+      <Link push href="/cigars/addCigar" asChild>
         <Pressable style={styles.addCigarButton}>
           <Text>Add Cigar</Text>
         </Pressable>

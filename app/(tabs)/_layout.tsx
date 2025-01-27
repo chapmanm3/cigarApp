@@ -1,4 +1,4 @@
-import { HeaderRight, UserImg } from '@/components/UserImg';
+import { HeaderRight } from '@/components/UserImg';
 import { TabBarIcon } from '@/components/navigation/TabBarIcon';
 import { TabBarMaterial } from '@/components/navigation/TabBarMaterial';
 import { TabBarMaterialCommunity } from '@/components/navigation/TabBarMaterialCommunity';
@@ -33,7 +33,6 @@ export default function TabLayout() {
       <Tabs.Screen
         name="cigars"
         options={{
-          href: "/cigars",
           title: "Cigar",
           tabBarIcon: ({ color, focused }) => (
             <TabBarMaterialCommunity name='cigar' color={color} />
