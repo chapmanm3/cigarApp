@@ -1,12 +1,12 @@
 import { signUpUser } from "@/api/auth"
 import { Button, ButtonText } from "@/components/ui/button"
 import { Center } from "@/components/ui/center"
-import { FormControl, FormControlError, FormControlErrorIcon, FormControlErrorText, FormControlHelper, FormControlHelperText, FormControlLabel, FormControlLabelText } from "@/components/ui/form-control"
+import { FormControl, FormControlError, FormControlErrorIcon, FormControlErrorText, FormControlLabel, FormControlLabelText } from "@/components/ui/form-control"
 import { AlertCircleIcon } from "@/components/ui/icon"
 import { Input, InputField } from "@/components/ui/input"
 import { VStack } from "@/components/ui/vstack"
+import { router } from "expo-router"
 import { useState } from "react"
-import invariant from "tiny-invariant"
 
 export default function CreateAccount() {
   const [email, setEmail] = useState<string>("")
@@ -15,9 +15,9 @@ export default function CreateAccount() {
   const [isPasswordInvalid, setIsPasswordInvalid] = useState<boolean>(false)
   const [confirmPassword, setConfirmPassword] = useState<string>("")
   const [isConfirmPasswordInvalid, setIsConfirmPasswordInvalid] = useState<boolean>(false)
-  const [isFirebaseError, setIsFirebaseError] = useState<boolean>(false)
+  const [authError, setAuthError] = useState<string>("")
 
-  const onSubmit = () => {
+  const onSubmit = async () => {
     if (!email) {
       setIsEmailInvalid(true)
       return;
@@ -39,9 +39,17 @@ export default function CreateAccount() {
       setIsConfirmPasswordInvalid(false)
     }
 
-    signUpUser(email, password)
-      .then((userCred) => console.log(userCred))
-      .catch((e) => setIsFirebaseError(true))
+    try {
+      const authResponse = await signUpUser(email, password)
+      if (authResponse.error) {
+        setAuthError(authResponse.error.message)
+      } else if (authResponse.data) {
+        router.push("/")
+      }
+    } catch (e: unknown) {
+      setAuthError("Something went wrong")
+      console.error(e)
+    }
   }
 
   return (
@@ -107,7 +115,7 @@ export default function CreateAccount() {
           </FormControlError>
         </FormControl>
 
-        <FormControl isInvalid={isFirebaseError} size="md" isDisabled={false} isReadOnly={true} isRequired={false} >
+        <FormControl isInvalid={isAuthError} size="md" isDisabled={false} isReadOnly={true} isRequired={false} >
           <FormControlError>
             <FormControlErrorIcon as={AlertCircleIcon} />
             <FormControlErrorText>

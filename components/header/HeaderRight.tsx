@@ -2,20 +2,22 @@ import { Avatar, AvatarBadge, AvatarFallbackText, AvatarImage } from "@/componen
 import { Box } from "@/components/ui/box"
 import { Button, ButtonText } from "@/components/ui/button"
 import { Menu, MenuItem, MenuItemLabel } from "@/components/ui/menu"
+import { supabase } from "@/utils/supabase"
+import { User } from "@supabase/supabase-js"
 import { Link } from "expo-router"
-import { User } from "firebase/auth"
 import { useEffect, useState } from "react"
-import { getUserInfo } from "./utils/asyncStorage"
 
 export const HeaderRight = () => {
   const [userInfo, setUserInfo] = useState<User | null>(null)
 
   useEffect(() => {
-    const loadUserData = async () => {
-      const user = await getUserInfo()
-      setUserInfo(user)
+    const getUserInfo = async () => {
+      const userSession = await supabase.auth.getSession()
+      if (userSession.data.session?.user) {
+        setUserInfo(userSession.data.session?.user)
+      }
     }
-    loadUserData()
+    getUserInfo()
   }, [])
 
   return (
@@ -31,7 +33,7 @@ export const HeaderRight = () => {
 const UserAvatar = ({ user }: { user: User }) => {
   return (
     <Avatar size="md">
-      <AvatarFallbackText>{user.displayName}</AvatarFallbackText>
+      <AvatarFallbackText>{user.email}</AvatarFallbackText>
       <AvatarImage
         source={{
           uri: 'userImgUrlHere',

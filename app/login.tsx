@@ -1,10 +1,11 @@
-import { loginUser, signUpUser } from "@/api/auth"
+import { loginUser } from "@/api/auth"
 import { Button, ButtonText } from "@/components/ui/button"
 import { Center } from "@/components/ui/center"
 import { FormControl, FormControlError, FormControlErrorIcon, FormControlErrorText, FormControlHelper, FormControlHelperText, FormControlLabel, FormControlLabelText } from "@/components/ui/form-control"
 import { AlertCircleIcon } from "@/components/ui/icon"
 import { Input, InputField } from "@/components/ui/input"
 import { VStack } from "@/components/ui/vstack"
+import { router } from "expo-router"
 import { useState } from "react"
 
 export default function Login() {
@@ -12,25 +13,20 @@ export default function Login() {
   const [isEmailInvalid, setIsEmailInvalid] = useState<boolean>(false)
   const [password, setPassword] = useState<string>("")
   const [isPasswordInvalid, setIsPasswordInvalid] = useState<boolean>(false)
-  const [firebaseError, setFirebaseError] = useState<string>("")
+  const [authError, setAuthError] = useState<string>("")
 
-  const mapFirebaseError = (error: string) => {
-    switch(error){
-      case "INVALID_LOGIN_CREDENTIALS":
-        return "Email or password incorrect"
-      default:
-        return "An error occured please try again"
+  const onSubmit = async () => {
+    try {
+      const authResponse = await loginUser(email, password)
+      if (authResponse.error) {
+        setAuthError(authResponse.error.message)
+      } else if (authResponse.data !== null) {
+        router.push("/")
+      }
+    } catch (e: unknown) {
+      setAuthError(("Please try again later"))
+      throw e
     }
-  }
-
-  const onSubmit = () => {
-    loginUser(email, password)
-    .then((user) => {
-
-    })
-    .catch(e => {
-      setFirebaseError(mapFirebaseError(e.message))
-    })
   }
 
   return (
@@ -70,11 +66,11 @@ export default function Login() {
           </Input>
         </FormControl>
 
-        <FormControl isInvalid={firebaseError !== ""} size="md" isDisabled={false} isReadOnly={true} isRequired={false} >
+        <FormControl isInvalid={authError !== ""} size="md" isDisabled={false} isReadOnly={true} isRequired={false} >
           <FormControlError>
             <FormControlErrorIcon as={AlertCircleIcon} />
             <FormControlErrorText>
-              {firebaseError}
+              {authError}
             </FormControlErrorText>
           </FormControlError>
         </FormControl>

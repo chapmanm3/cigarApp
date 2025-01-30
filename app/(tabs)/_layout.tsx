@@ -1,4 +1,4 @@
-import { HeaderRight } from '@/components/UserImg';
+import { HeaderRight } from '@/components/header/HeaderRight';
 import { TabBarIcon } from '@/components/navigation/TabBarIcon';
 import { TabBarMaterial } from '@/components/navigation/TabBarMaterial';
 import { TabBarMaterialCommunity } from '@/components/navigation/TabBarMaterialCommunity';

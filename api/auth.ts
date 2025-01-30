@@ -1,20 +1,22 @@
-import { setUserInfo } from "@/components/utils/asyncStorage";
-import { auth } from "@/firebaseConfig";
-import { UserCredential, createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { supabase } from "@/utils/supabase";
+import { AuthResponse } from "@supabase/supabase-js";
 
-export async function signUpUser(email: string, password: string): Promise<UserCredential> {
-  return createUserWithEmailAndPassword(auth, email, password)
+export async function signUpUser(email: string, password: string): Promise<AuthResponse> {
+  try {
+    return supabase.auth.signUp({ email, password })
+  }
+  catch (e) {
+    console.error("Auth Error", e)
+    throw e
+  }
 }
 
-export async function loginUser(email: string, password: string): Promise<UserCredential> {
+export async function loginUser(email: string, password: string): Promise<AuthResponse> {
   try {
-    const user = await signInWithEmailAndPassword(auth, email, password)
-    await setUserInfo(user.user)
-    const userToken = await user.user.getIdToken()
-    window.authToken = userToken
-    return user
+    return await supabase.auth.signInWithPassword({ email, password })
   } catch (e) {
     //track error;
+    console.error("Login Error", e)
     throw e
   }
 }
