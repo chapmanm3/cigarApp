@@ -1,18 +1,19 @@
 import { getAllCigarsQuery } from "@/api/cigarsQueries";
 import CigarCard from "@/components/cigar/CigarCard";
+import { SessionContext } from "@/components/contexts/UserContext";
 import { Center } from "@/components/ui/center";
 import { Spinner } from "@/components/ui/spinner";
 import { VStack } from "@/components/ui/vstack";
 import { useFirebaseCurrentUser } from "@/hooks/useFirebaseCurrentUser";
 import type { Cigar } from "@/types/cigarTypes";
 import { Link } from "expo-router";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Pressable, StyleSheet, Text } from "react-native";
 
 export default function Cigar() {
   const [isLoading, setIsLoading] = useState(true)
   const [cigars, setCigars] = useState<Cigar[]>([])
-  const user = useFirebaseCurrentUser()
+  const userSession = useContext(SessionContext)
 
   useEffect(() => {
     getAllCigarsQuery()
@@ -21,7 +22,7 @@ export default function Cigar() {
       })
       .catch(e => console.error(e))
       .finally(() => setIsLoading(false))
-  }, [user])
+  }, [userSession])
 
   if (isLoading) {
     return (
