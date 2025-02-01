@@ -5,9 +5,7 @@ import axios from "axios";
 const apiUrl = process.env.EXPO_PUBLIC_BACKEND_URL;
 
 export async function getAllCigarsQuery(): Promise<Cigar[]> {
-  console.log(auth.currentUser)
   const authToken = window.authToken
-  console.log("Auth Token: ", authToken)
   return axios.get<CigarResponse[]>(`${apiUrl}/cigars`, { headers: { "id-token": authToken } })
     .then(resp => {
       if (resp.data.length === 0) {
@@ -29,6 +27,6 @@ export async function getAllCigarsQuery(): Promise<Cigar[]> {
 }
 
 export async function createCigarQuery(cigarForm: CigarForm): Promise<void> {
-  const authToken = await auth.currentUser?.getIdToken()
+  const authToken = window.authToken
   return axios.post(`${apiUrl}/createCigar`, { cigar: { ...cigarForm } }, { headers: { "id-token": authToken } })
 }
