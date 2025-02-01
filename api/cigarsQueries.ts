@@ -1,4 +1,3 @@
-import { auth } from "@/firebaseConfig";
 import { Cigar, CigarForm, CigarResponse } from "@/types/cigarTypes";
 import axios from "axios";
 
