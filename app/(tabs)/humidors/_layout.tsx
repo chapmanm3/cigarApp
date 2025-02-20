@@ -1,6 +1,6 @@
 import { Stack } from "expo-router";
 
-export default function CigarsLayout() {
+export default function HumidorsLayout() {
   return (
     <Stack
       screenOptions={{
@@ -8,7 +8,7 @@ export default function CigarsLayout() {
       }}
     >
       <Stack.Screen name="index" />
-      <Stack.Screen name="addCigar" />
+      <Stack.Screen name="addHumidor" />
     </Stack >
   )
 }

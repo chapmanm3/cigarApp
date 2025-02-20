@@ -9,15 +9,15 @@ import { Link } from "expo-router";
 import { useContext, useEffect, useState } from "react";
 import { Pressable, StyleSheet, Text } from "react-native";
 
-export default function Cigar() {
+export default function Humidors() {
   const [isLoading, setIsLoading] = useState(true)
-  const [cigars, setCigars] = useState<Cigar[]>([])
+  const [humidors, setHumidors] = useState<Cigar[]>([])
   const userSession = useContext(SessionContext)
 
   useEffect(() => {
-    getAllCigarsQuery()
-      .then(cigars => {
-        setCigars(cigars)
+    getAllHumidorsQuery()
+      .then(humidors => {
+        setHumidors(humidors)
       })
       .catch(e => console.error(e))
       .finally(() => setIsLoading(false))
@@ -33,12 +33,12 @@ export default function Cigar() {
     <>
       <Center className="overflow-scroll">
         <VStack space="md" className="w-full max-w-[500px] overflow-scroll">
-          {cigars.length > 0 ? cigars.map(cigar => <CigarCard cigar={cigar} key={cigar.id} />) : null}
+          {humidors.length > 0 ? humidors.map(humidor => <CigarCard cigar={cigar} key={cigar.id} />) : null}
         </VStack>
       </Center>
-      <Link push href="/cigars/addCigar" asChild>
-        <Pressable style={styles.addCigarButton}>
-          <Text>Add Cigar</Text>
+      <Link push href="/humidors/addHumidor" asChild>
+        <Pressable style={styles.addHumidorButton}>
+          <Text>Add Humidor</Text>
         </Pressable>
       </Link>
     </>
@@ -46,7 +46,7 @@ export default function Cigar() {
 }
 
 const styles = StyleSheet.create({
-  addCigarButton: {
+  addHumidorButton: {
     position: 'absolute',
     bottom: 10,
     right: 10
