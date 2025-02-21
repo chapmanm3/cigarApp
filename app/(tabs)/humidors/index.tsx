@@ -1,6 +1,6 @@
-import { getAllCigarsQuery } from "@/api/cigarsQueries";
-import CigarCard from "@/components/cigar/CigarCard";
+import { getAllHumidorsQuery } from "@/api/humidorQueries";
 import { SessionContext } from "@/components/contexts/UserContext";
+import HumidorCard from "@/components/humidors/HumidorCard";
 import { Center } from "@/components/ui/center";
 import { Spinner } from "@/components/ui/spinner";
 import { VStack } from "@/components/ui/vstack";
@@ -33,7 +33,7 @@ export default function Humidors() {
     <>
       <Center className="overflow-scroll">
         <VStack space="md" className="w-full max-w-[500px] overflow-scroll">
-          {humidors.length > 0 ? humidors.map(humidor => <CigarCard cigar={cigar} key={cigar.id} />) : null}
+          {humidors.length > 0 ? humidors.map(humidor => <HumidorCard humidor={humidor} key={humidor.id} />) : null}
         </VStack>
       </Center>
       <Link push href="/humidors/addHumidor" asChild>

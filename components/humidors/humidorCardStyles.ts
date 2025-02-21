@@ -1,6 +1,6 @@
 import { StyleSheet } from "react-native";
 
-export const cigarCardStyles = StyleSheet.create({
+export const humidorCardStyles = StyleSheet.create({
   mainContainer: {
     display: 'flex',
     flexDirection: 'row',

@@ -22,7 +22,7 @@ export default function TabLayout() {
       }}
     >
       <Tabs.Screen
-        name="humidor"
+        name="humidors"
         options={{
           title: "Humidor",
           tabBarIcon: ({ color, focused }) => (
