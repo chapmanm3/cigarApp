@@ -115,7 +115,7 @@ export default function CreateAccount() {
           </FormControlError>
         </FormControl>
 
-        <FormControl isInvalid={isAuthError} size="md" isDisabled={false} isReadOnly={true} isRequired={false} >
+        <FormControl isInvalid={authError !== undefined} size="md" isDisabled={false} isReadOnly={true} isRequired={false} >
           <FormControlError>
             <FormControlErrorIcon as={AlertCircleIcon} />
             <FormControlErrorText>

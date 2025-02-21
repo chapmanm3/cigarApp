@@ -12,7 +12,7 @@ export default function HumidorCard({ humidor }: Props) {
   return (
     <View style={humidorCardStyles.mainContainer}>
       <View style={humidorCardStyles.cardImageContainer}>
-        <Image style={{ width: "100%", height: "100%" }} source={require('@/assets/images/new_icon.png')} />
+        <Image style={{ width: "100%", height: "100%" }} />
       </View>
       <View style={humidorCardStyles.textContainer}>
         <Text>Name: {humidor.name}</Text>

@@ -4,7 +4,7 @@ import { Button, ButtonText } from "@/components/ui/button"
 import { Menu, MenuItem, MenuItemLabel } from "@/components/ui/menu"
 import { supabase } from "@/utils/supabase"
 import { User } from "@supabase/supabase-js"
-import { Link } from "expo-router"
+import { Link, router } from "expo-router"
 import { useEffect, useState } from "react"
 
 export const HeaderRight = () => {
@@ -31,16 +31,36 @@ export const HeaderRight = () => {
 }
 
 const UserAvatar = ({ user }: { user: User }) => {
+
+  const onPressHandler = async () => {
+    const { error } = await supabase.auth.signOut()
+    router.navigate('/')
+  }
+
   return (
-    <Avatar size="md">
-      <AvatarFallbackText>{user.email}</AvatarFallbackText>
-      <AvatarImage
-        source={{
-          uri: 'userImgUrlHere',
-        }}
-      />
-      <AvatarBadge />
-    </Avatar >
+    <Menu
+      placement="bottom left"
+      trigger={({ ...triggerProps }) => {
+        return (
+          <Button {...triggerProps}>
+            <Avatar size="md">
+              <AvatarFallbackText>{user.email}</AvatarFallbackText>
+              <AvatarImage
+                source={{
+                  uri: 'userImgUrlHere',
+                }}
+              />
+              <AvatarBadge />
+            </Avatar >
+          </Button>
+        )
+      }}
+    >
+
+      <MenuItem>
+        <MenuItemLabel size="sm" className="w-full" onPress={onPressHandler}>Sign out</MenuItemLabel>
+      </MenuItem>
+    </Menu>
   )
 }
 
