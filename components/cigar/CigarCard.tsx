@@ -12,7 +12,7 @@ export default function CigarCard({ cigar }: Props) {
   return (
     <View style={cigarCardStyles.mainContainer}>
       <View style={cigarCardStyles.cardImageContainer}>
-      {<Image style={{width: "100%", height: "100%"}} />}
+        {<Image style={{ width: "100%", height: "100%" }} source={require("@/assets/images/newIcon.png")} />}
       </View>
       <View style={cigarCardStyles.textContainer}>
         <Text>Name: {cigar.name}</Text>

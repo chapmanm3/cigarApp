@@ -6,6 +6,7 @@ import { supabase } from "@/utils/supabase"
 import { User } from "@supabase/supabase-js"
 import { Link, router } from "expo-router"
 import { useEffect, useState } from "react"
+import { Pressable } from "../ui/pressable"
 
 export const HeaderRight = () => {
   const [userInfo, setUserInfo] = useState<User | null>(null)
@@ -34,7 +35,9 @@ const UserAvatar = ({ user }: { user: User }) => {
 
   const onPressHandler = async () => {
     const { error } = await supabase.auth.signOut()
-    router.navigate('/')
+    if (!error) {
+      router.navigate('/')
+    }
   }
 
   return (
@@ -42,7 +45,7 @@ const UserAvatar = ({ user }: { user: User }) => {
       placement="bottom left"
       trigger={({ ...triggerProps }) => {
         return (
-          <Button {...triggerProps}>
+          <Pressable {...triggerProps}>
             <Avatar size="md">
               <AvatarFallbackText>{user.email}</AvatarFallbackText>
               <AvatarImage
@@ -52,7 +55,7 @@ const UserAvatar = ({ user }: { user: User }) => {
               />
               <AvatarBadge />
             </Avatar >
-          </Button>
+          </Pressable>
         )
       }}
     >

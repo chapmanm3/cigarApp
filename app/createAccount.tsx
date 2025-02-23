@@ -15,7 +15,7 @@ export default function CreateAccount() {
   const [isPasswordInvalid, setIsPasswordInvalid] = useState<boolean>(false)
   const [confirmPassword, setConfirmPassword] = useState<string>("")
   const [isConfirmPasswordInvalid, setIsConfirmPasswordInvalid] = useState<boolean>(false)
-  const [authError, setAuthError] = useState<string>("")
+  const [authError, setAuthError] = useState<string | null>(null)
 
   const onSubmit = async () => {
     if (!email) {
@@ -115,7 +115,7 @@ export default function CreateAccount() {
           </FormControlError>
         </FormControl>
 
-        <FormControl isInvalid={authError !== undefined} size="md" isDisabled={false} isReadOnly={true} isRequired={false} >
+        <FormControl isInvalid={authError !== null} size="md" isDisabled={false} isReadOnly={true} isRequired={false} >
           <FormControlError>
             <FormControlErrorIcon as={AlertCircleIcon} />
             <FormControlErrorText>

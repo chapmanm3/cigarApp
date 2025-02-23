@@ -4,11 +4,11 @@
     "slug": "cigarApp",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/new_icon.png",
+    "icon": "./assets/images/newIcon.png",
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
     "splash": {
-      "image": "./assets/images/new_icon.png",
+      "image": "./assets/images/newIcon.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -21,7 +21,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/adaptive-icon.png",
+        "foregroundImage": "./assets/images/newIcon.png",
         "backgroundColor": "#ffffff"
       },
       "package": "com.chapmanm3.cigarApp"
@@ -29,10 +29,18 @@
     "web": {
       "bundler": "metro",
       "output": "static",
-      "favicon": "./assets/images/new_icon.png"
+      "favicon": "./assets/images/newIcon.png"
     },
     "plugins": [
-      "expo-router"
+      "expo-router",
+      [
+        "expo-asset",
+        {
+          "assets": [
+            "./assets/images/"
+          ]
+        }
+      ]
     ],
     "experiments": {
       "typedRoutes": true
