@@ -4,15 +4,18 @@ import { SessionContext } from "@/components/contexts/UserContext";
 import { Center } from "@/components/ui/center";
 import { Spinner } from "@/components/ui/spinner";
 import type { Cigar } from "@/types/cigarTypes";
-import { Link } from "expo-router";
+import { Link, router } from "expo-router";
 import { useContext, useEffect, useState } from "react";
-import { FlatList, Pressable, StyleSheet, Text } from "react-native";
+import { FlatList, Pressable, StyleSheet, Text, View } from "react-native";
 import CigarList from "./cigarList";
+import cigarListStyles from "./cigarListStyles";
 
 export default function Cigar() {
   const [isLoading, setIsLoading] = useState(false)
   const [cigars, setCigars] = useState<UsersCigars>([])
   const userSession = useContext(SessionContext)
+
+  const styles = cigarListStyles
 
   useEffect(() => {
     const fetchCigars = async () => {
@@ -31,6 +34,10 @@ export default function Cigar() {
     fetchCigars()
   }, [userSession])
 
+  const onPressAddCigar = () => {
+    router.push("/cigars/addCigar")
+  }
+
   if (isLoading) {
     return (
       <Spinner />
@@ -38,21 +45,11 @@ export default function Cigar() {
   }
 
   return (
-    <>
+    <View style={styles.container}>
       <CigarList cigars={cigars} />
-      <Link push href="/cigars/addCigar" asChild>
-        <Pressable style={styles.addCigarButton}>
-          <Text>Add Cigar</Text>
-        </Pressable>
-      </Link>
-    </>
+      <Pressable style={styles.addButton} onPress={onPressAddCigar}>
+        <Text style={styles.addButtonText}>+</Text>
+      </Pressable>
+    </View>
   );
 }
-
-const styles = StyleSheet.create({
-  addCigarButton: {
-    position: 'absolute',
-    bottom: 10,
-    right: 10
-  }
-})

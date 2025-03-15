@@ -32,15 +32,19 @@ const cigarListStyles = StyleSheet.create({
     color: '#666', // Medium gray text
   },
   addButton: {
+    position: 'absolute',
+    bottom: 10,
+    right: 10,
+    width: 40,
+    height: 40,
     backgroundColor: '#654321', // Primary color
-    paddingVertical: 12,
-    borderRadius: 8,
+    borderRadius: 20,
     alignItems: 'center',
-    marginBottom: 16,
+    justifyContent: 'center',
   },
   addButtonText: {
     color: '#fff', // White text
-    fontSize: 16,
+    fontSize: 20,
     fontWeight: 'bold',
   },
   //Dark Mode

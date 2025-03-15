@@ -25,27 +25,17 @@ const CigarList: React.FC<CigarListProps> = ({
   cigars,
 }) => {
   // const { theme } = useContext(ThemeContext); // Get the current theme
-  const styles = cigarListStyles;
 
   const onPressCigar = (item: UserCigar) => {
     console.log("Cigar Pressed")
   }
 
-  const onPressAddCigar = () => {
-    router.push("/cigars/addCigar")
-  }
-
   return (
-    <View style={styles.container}>
-      <TouchableOpacity style={styles.addButton} onPress={onPressAddCigar}>
-        <Text style={styles.addButtonText}>+ Add Cigar</Text>
-      </TouchableOpacity>
-      <FlatList
-        data={cigars}
-        renderItem={({ item }) => <CigarListItem item={item} onPressCigar={onPressCigar} />}
-        keyExtractor={(item) => item.id.toString()}
-      />
-    </View>
+    <FlatList
+      data={cigars}
+      renderItem={({ item }) => <CigarListItem item={item} onPressCigar={onPressCigar} />}
+      keyExtractor={(item) => item.id.toString()}
+    />
   );
 };
 

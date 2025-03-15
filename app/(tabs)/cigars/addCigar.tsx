@@ -1,21 +1,7 @@
-import AddCigarForm from "@/components/cigar/AddCigarForm";
-import { View } from "react-native";
+import AddCigarFormV2 from "@/components/cigar/AddCigarFormV2";
 
 export default function AddCigar() {
   return (
-    <View
-      style={{
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
-      <View style={{
-        width: '50%',
-        flex: 1,
-      }}>
-        <AddCigarForm />
-      </View>
-    </View>
+    <AddCigarFormV2 />
   );
 }

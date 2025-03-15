@@ -1,4 +1,3 @@
-import { Cigar } from "@/types/cigarTypes";
 import { Image, Text, TouchableOpacity, View } from "react-native";
 import cigarListStyles from "./cigarListStyles";
 import { UserCigar } from "@/api/cigarsQueries";
