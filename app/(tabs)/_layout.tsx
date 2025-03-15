@@ -10,6 +10,16 @@ export default function TabLayout() {
   return (
     <Tabs
       screenOptions={{
+        headerStyle: {
+          backgroundColor: "#f0f0f0",
+        },
+        headerTitleStyle: {
+          color: "#333"
+        },
+        tabBarStyle: {
+          backgroundColor: "#f0f0f0"
+        },
+        tabBarActiveTintColor: "#654321",
         headerLeft: () => (
           <Box className='ml-2'>
             <Text>Embargo</Text>

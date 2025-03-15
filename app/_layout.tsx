@@ -6,8 +6,6 @@ import { AppState } from "react-native";
 import { supabase } from "@/utils/supabase";
 import { SessionContextProvider } from "@/components/contexts/UserContext";
 
-
-
 AppState.addEventListener('change', (state) => {
   if (state === 'active') {
     supabase.auth.startAutoRefresh()

@@ -20,7 +20,7 @@ export default function AddCigarForm() {
   const [loading, setLoading] = useState<boolean>(false)
 
   const onFormCancel = () => {
-    router.push('/cigars')
+    router.back()
   }
 
   const onFormSubmit = () => {
