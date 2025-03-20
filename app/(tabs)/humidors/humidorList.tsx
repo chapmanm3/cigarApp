@@ -1,34 +1,32 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import {
   FlatList,
 } from 'react-native';
 // Import either cigarListStyles or cigarGridStyles depending on the selected layout
 import { CigarListItem } from './cigarListItem';
 import { UserCigar, UsersCigars } from '@/api/cigarsQueries';
+import { UserHumidor, UsersHumidors } from '@/api/humidorQueries';
+import { HumidorListItem } from './HumidorListItem';
 
 // Assuming you have a ThemeContext
 // import { ThemeContext } from './ThemeContext';
 
-interface CigarListProps {
-  cigars: UsersCigars;
+interface Props {
+  humidors: UsersHumidors;
 }
 
-const CigarList: React.FC<CigarListProps> = ({
-  cigars,
-}) => {
+export const HumidorsList: React.FC<Props> = ({ humidors }) => {
   // const { theme } = useContext(ThemeContext); // Get the current theme
 
-  const onPressCigar = (item: UserCigar) => {
+  const onPressHumidor = (item: UserHumidor) => {
     console.log("Cigar Pressed")
   }
 
   return (
     <FlatList
-      data={cigars}
-      renderItem={({ item }) => <CigarListItem item={item} onPressCigar={onPressCigar} />}
+      data={humidors}
+      renderItem={({ item }) => <HumidorListItem item={item} onPressItem={onPressHumidor} />}
       keyExtractor={(item) => item.id.toString()}
     />
   );
 };
-
-export default CigarList;

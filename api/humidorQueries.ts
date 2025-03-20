@@ -1,28 +1,37 @@
-import { Humidor, HumidorForm, HumidorResponse } from "@/types/humidorTypes";
-import axios from "axios";
+import { getUserId, supabase } from "@/utils/supabase";
+import { QueryData } from "@supabase/supabase-js";
 
-const apiUrl = process.env.EXPO_PUBLIC_BACKEND_URL;
 
-export async function getAllHumidorsQuery(): Promise<Humidor[]> {
-  const authToken = window.authToken
-  return axios.get<HumidorResponse[]>(`${apiUrl}/humidors`, { headers: { "id-token": authToken } })
-    .then(resp => {
-      if (resp.data.length === 0) {
-        return []
-      }
-      return resp.data.map(x => ({
-        id: x.id,
-        name: x.name,
-        description: x.description,
-        cigars: x.cigars
-      }))
-    }).catch(e => {
-      console.error(e)
-      return []
-    })
+const usersHumidors = supabase.from('humidors').select()
+export type UsersHumidors = QueryData<typeof usersHumidors>
+export type UserHumidor = UsersHumidors[number]
+
+export async function getAllHumidorsSupabase(): Promise<UsersHumidors> {
+
+  const { data, error } = await usersHumidors
+
+  if (error) {
+    console.error(error)
+    throw error
+  }
+
+  return data
 }
 
-export async function createHumidorQuery(humidorForm: HumidorForm): Promise<void> {
-  const authToken = window.authToken
-  return axios.post(`${apiUrl}/createHumidor`, { humidor: { ...humidorForm } }, { headers: { "id-token": authToken } })
+type CreateHumidorObject = Omit<UserHumidor, "created_at" | "updated_at" | "image_url" | "id" | "user_id">
+
+export async function createNewHumidor(humidor: CreateHumidorObject): Promise<null> {
+  const userId = await getUserId()
+
+  const { data, error } = await supabase.from('humidors').insert({
+    ...humidor,
+    user_id: userId
+  })
+
+  if (error) {
+    console.error(error)
+    throw error
+  }
+
+  return null
 }

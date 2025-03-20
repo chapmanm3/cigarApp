@@ -1,31 +1,31 @@
+import { UserHumidor } from "@/api/humidorQueries"
+import { humidorListStyles } from "./humidorListStyles";
 import { Image, Text, TouchableOpacity, View } from "react-native";
-import cigarListStyles from "./cigarListStyles";
-import { UserCigar } from "@/api/cigarsQueries";
 
 interface Props {
-  item: UserCigar,
-  onPressCigar: (item: UserCigar) => void;
+  item: UserHumidor,
+  onPressItem: (item: UserHumidor) => void;
 }
 
-export const CigarListItem = ({ item, onPressCigar }: Props) => {
-  const styles = cigarListStyles;
+export const HumidorListItem = ({ item, onPressItem }: Props) => {
+  const styles = humidorListStyles;
 
   return (
     <TouchableOpacity
       style={[
-        styles.cigarItem,
+        styles.humidorItem,
         // theme === 'dark' && styles.darkCigarItem, //Darkmode
       ]}
-      onPress={() => onPressCigar(item)}
+      onPress={() => onPressItem(item)}
     >
       <Image
         source={require("@/assets/images/newIcon.png")}
-        style={styles.cigarImage}
+        style={styles.humidorImage}
       />
-      <View style={styles.cigarInfo}>
+      <View style={styles.humidorInfo}>
         <Text
           style={[
-            styles.cigarName,
+            styles.humidorName,
             // theme === 'dark' && styles.darkCigarName, //Darkmode
           ]}
         >
@@ -33,13 +33,13 @@ export const CigarListItem = ({ item, onPressCigar }: Props) => {
         </Text>
         <Text
           style={[
-            styles.cigarDetails,
+            styles.humidorDetails,
             // theme === 'dark' && styles.darkCigarDetails, //Darkmode
           ]}
         >
-          {item.brand}
+          {item.capacity}
         </Text>
       </View>
     </TouchableOpacity>
   )
-};
+}

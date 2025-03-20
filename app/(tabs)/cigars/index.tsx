@@ -1,12 +1,10 @@
-import { UsersCigars, getAllCigarsQuery, getAllCigarsSupabase } from "@/api/cigarsQueries";
-import CigarCard from "@/components/cigar/CigarCard";
+import { UsersCigars, getAllCigarsSupabase } from "@/api/cigarsQueries";
 import { SessionContext } from "@/components/contexts/UserContext";
-import { Center } from "@/components/ui/center";
 import { Spinner } from "@/components/ui/spinner";
 import type { Cigar } from "@/types/cigarTypes";
-import { Link, router } from "expo-router";
+import { router } from "expo-router";
 import { useContext, useEffect, useState } from "react";
-import { FlatList, Pressable, StyleSheet, Text, View } from "react-native";
+import { Pressable, Text, View } from "react-native";
 import CigarList from "./cigarList";
 import cigarListStyles from "./cigarListStyles";
 

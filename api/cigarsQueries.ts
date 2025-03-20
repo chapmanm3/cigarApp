@@ -1,38 +1,5 @@
-import { Cigar, CigarForm, CigarResponse } from "@/types/cigarTypes";
-import { supabase } from "@/utils/supabase";
 import { QueryData } from "@supabase/supabase-js";
-import axios from "axios";
-
-const apiUrl = process.env.EXPO_PUBLIC_BACKEND_URL;
-
-export async function getAllCigarsQuery(): Promise<Cigar[]> {
-  const authToken = window.authToken
-  return axios.get<CigarResponse[]>(`${apiUrl}/cigars`, { headers: { "id-token": authToken } })
-    .then(resp => {
-      if (resp.data.length === 0) {
-        return [];
-      }
-      return resp.data.map(x => ({
-        id: x.id,
-        name: x.name,
-        brand: x.brand,
-        description: x.description,
-        image: x.image,
-        humidorId: x.humidorId
-      }))
-    })
-    .catch(e => {
-      console.error(e)
-      return []
-    })
-}
-
-export async function createCigarQuery(cigarForm: CigarForm): Promise<void> {
-  const authToken = window.authToken
-  return axios.post(`${apiUrl}/createCigar`, { cigar: { ...cigarForm } }, { headers: { "id-token": authToken } })
-}
-
-
+import { getUserId, supabase } from "../utils/supabase";
 
 ///.....Supabase queries.....///
 
@@ -50,4 +17,23 @@ export async function getAllCigarsSupabase(): Promise<UsersCigars> {
   }
 
   return data
+}
+
+type CreateCigarObject = Omit<UserCigar, "created_at" | "updated_at" | "image_url" | "id" | "user_id">
+
+export async function createNewCigar(cigar: CreateCigarObject): Promise<null> {
+  const userId = await getUserId()
+  console.log(userId)
+  const { data, error } = await supabase.from('cigars').insert([
+    {
+      ...cigar,
+      user_id: userId
+    }])
+
+  if (error) {
+    console.error(error)
+    throw error
+  }
+
+  return null
 }

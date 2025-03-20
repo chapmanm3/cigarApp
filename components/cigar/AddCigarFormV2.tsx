@@ -12,6 +12,7 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import { router } from 'expo-router';
 
 import { styles } from './CigarFormV2Styles';
+import { createNewCigar } from '@/api/cigarsQueries';
 
 interface AddCigarScreenProps { }
 
@@ -61,22 +62,9 @@ const AddCigarFormV2: React.FC<AddCigarScreenProps> = () => {
         price: priceNumber,
         quantity: quantityNumber,
         notes,
-        user_id: 'YOUR_USER_ID', // Replace with the actual user ID
       };
 
-      // Make the Supabase API call to insert the new cigar
-      // const { data, error } = await supabase
-      //   .from('cigars')
-      //   .insert([newCigar]);
-
-      // if (error) {
-      //   console.error('Error saving cigar:', error);
-      //   Alert.alert('Error', 'Failed to save cigar. Please try again.');
-      // } else {
-      //   console.log('Cigar saved successfully:', data);
-      //   Alert.alert('Success', 'Cigar saved successfully!');
-      //   navigation.goBack(); // Navigate back to the cigar list
-      // }
+      await createNewCigar(newCigar)
       console.log(newCigar);
       Alert.alert('Success', 'Cigar saved successfully!');
       router.back()
