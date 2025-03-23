@@ -21,11 +21,24 @@ export const formStyles = StyleSheet.create({
   saveButton: {
     backgroundColor: '#654321',
     paddingVertical: 12,
-    borderRadius: 8,
+    borderRadius: 24,
     alignItems: 'center',
   },
   saveButtonText: {
     color: '#fff',
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+  secondaryButton: {
+    borderColor: '#654321',
+    borderWidth: 1,
+    paddingVertical: 12,
+    borderRadius: 24,
+    alignItems: 'center',
+    marginTop: 12,
+  },
+  secondaryButtonText: {
+    color: '#654321',
     fontSize: 16,
     fontWeight: 'bold',
   },

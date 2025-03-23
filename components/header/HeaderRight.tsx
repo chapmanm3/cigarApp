@@ -8,6 +8,7 @@ import { Link, router } from "expo-router"
 import { useContext, useEffect, useState } from "react"
 import { Pressable } from "../ui/pressable"
 import { SessionContext } from "../contexts/UserContext"
+import { StyleSheet, Text } from "react-native"
 
 export const HeaderRight = () => {
   const [userInfo, setUserInfo] = useState<User | null>(null)
@@ -70,26 +71,23 @@ const UserAvatar = ({ user }: { user: User }) => {
 
 const UserActionMenu = () => {
   return (
-    <Menu
-      placement="bottom left"
-      trigger={({ ...triggerProps }) => {
-        return (
-          <Button {...triggerProps}>
-            <ButtonText>Sign In</ButtonText>
-          </Button>
-        )
-      }}
-    >
-      <MenuItem key="Create account" textValue="Create account">
-        <Link href="/createAccount" asChild>
-          <MenuItemLabel size="sm" className="w-full">Create account</MenuItemLabel>
-        </Link>
-      </MenuItem>
-      <MenuItem key="Sign in" textValue="Sign in">
-        <Link href="/login" asChild>
-          <MenuItemLabel size="sm" className="w-full">Sign in</MenuItemLabel>
-        </Link>
-      </MenuItem>
-    </Menu>
+    <Pressable style={styles.primaryButton} onPress={() => router.push('/login')}>
+      <Text style={styles.primaryButtonText}>Login</Text>
+    </Pressable>
   )
 }
+
+const styles = StyleSheet.create({
+  primaryButton: {
+    backgroundColor: '#654321',
+    paddingVertical: 6,
+    paddingHorizontal: 10,
+    borderRadius: 24,
+    alignItems: 'center',
+  },
+  primaryButtonText: {
+    color: '#fff',
+    fontSize: 14,
+    fontWeight: 'bold',
+  }
+})

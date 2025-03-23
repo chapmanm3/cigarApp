@@ -19,11 +19,25 @@ export default function RootLayout() {
     <GluestackUIProvider mode="light">
       <SessionContextProvider>
         <RootSiblingParent>
-          <Stack>
+          <Stack
+            screenOptions={{
+              headerStyle: {
+                backgroundColor: "#f0f0f0",
+              },
+              headerTitle: "",
+              headerShadowVisible: false,
+              headerBackVisible: true,
+              headerBackTitle: "Back",
+              headerTintColor: "#333"
+
+            }}
+          >
             <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+            <Stack.Screen name="login" />
+            <Stack.Screen name="createAccount" />
           </Stack>
         </RootSiblingParent>
       </SessionContextProvider>
-    </GluestackUIProvider>
+    </GluestackUIProvider >
   );
 }

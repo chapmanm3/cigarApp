@@ -2,7 +2,7 @@ import { loginUser } from "@/api/auth"
 import { formStyles } from "@/styles/formStyles"
 import { router } from "expo-router"
 import { useState } from "react"
-import { ActivityIndicator, Alert, Pressable, Text, TextInput, TouchableOpacity, View } from "react-native"
+import { ActivityIndicator, Alert, Pressable, Text, TextInput, View } from "react-native"
 
 export default function Login() {
   const [email, setEmail] = useState<string>("")
@@ -18,7 +18,7 @@ export default function Login() {
       if (authResponse.error) {
         Alert.alert("Error", "Something went wrong please try again")
       } else if (authResponse.data !== null) {
-        router.back()
+        router.dismiss()
       }
     } catch (e: unknown) {
       Alert.alert("Error", "Something went wrong please try again")
@@ -34,21 +34,25 @@ export default function Login() {
         style={style.input}
         value={email}
         placeholder="Email"
-        textContentType="username"
+        textContentType="emailAddress"
         onChangeText={setEmail}
       />
       <TextInput
         style={style.input}
         value={password}
-        placeholder="password"
+        placeholder="Password"
         textContentType="password"
         onChangeText={setPassword}
-        secureTextEntry={true}
+        secureTextEntry
       />
 
       <Pressable style={style.saveButton} onPress={onSubmit}>
         {isLoading ? <ActivityIndicator /> : <Text style={style.saveButtonText}>Login</Text>}
       </Pressable>
+      <Pressable style={style.secondaryButton} onPress={() => router.push('/createAccount')}>
+        <Text style={style.secondaryButtonText}>Create Account</Text>
+      </Pressable>
     </View>
   )
 }
+

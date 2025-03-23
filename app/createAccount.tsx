@@ -1,133 +1,65 @@
 import { signUpUser } from "@/api/auth"
-import { Button, ButtonText } from "@/components/ui/button"
-import { Center } from "@/components/ui/center"
-import { FormControl, FormControlError, FormControlErrorIcon, FormControlErrorText, FormControlLabel, FormControlLabelText } from "@/components/ui/form-control"
-import { AlertCircleIcon } from "@/components/ui/icon"
-import { Input, InputField } from "@/components/ui/input"
-import { VStack } from "@/components/ui/vstack"
+import { formStyles } from "@/styles/formStyles"
 import { router } from "expo-router"
 import { useState } from "react"
+import { ActivityIndicator, Pressable, TextInput, Text, View, Alert } from "react-native"
 
 export default function CreateAccount() {
   const [email, setEmail] = useState<string>("")
-  const [isEmailInvalid, setIsEmailInvalid] = useState<boolean>(false)
   const [password, setPassword] = useState<string>("")
-  const [isPasswordInvalid, setIsPasswordInvalid] = useState<boolean>(false)
   const [confirmPassword, setConfirmPassword] = useState<string>("")
-  const [isConfirmPasswordInvalid, setIsConfirmPasswordInvalid] = useState<boolean>(false)
-  const [authError, setAuthError] = useState<string | null>(null)
+  const [isLoading, setIsLoading] = useState(false)
+
+  const style = formStyles
 
   const onSubmit = async () => {
-    if (!email) {
-      setIsEmailInvalid(true)
-      return;
-    } else {
-      setIsEmailInvalid(false)
-    }
-
-    if (!password) {
-      setIsPasswordInvalid(true)
-      return;
-    } else {
-      setIsPasswordInvalid(false)
-    }
-
-    if (!confirmPassword || (confirmPassword !== password)) {
-      setIsConfirmPasswordInvalid(true)
-      return;
-    } else {
-      setIsConfirmPasswordInvalid(false)
-    }
-
     try {
+      setIsLoading(true)
       const authResponse = await signUpUser(email, password)
       if (authResponse.error) {
-        setAuthError(authResponse.error.message)
+        Alert.alert("Error", "Something went wrong please try again")
       } else if (authResponse.data) {
-        router.push("/")
+        router.dismissAll()
       }
     } catch (e: unknown) {
-      setAuthError("Something went wrong")
       console.error(e)
+      Alert.alert("Error", "Something went wrong please try again")
+    } finally {
+      setIsLoading(false)
     }
   }
 
   return (
-    <Center>
-      <VStack space="md" className="w-full max-w-[500px] rounded-md border border-background-200 p-4 m-4">
-        <FormControl isInvalid={isEmailInvalid} size="md" isRequired={true}>
-          <FormControlLabel>
-            <FormControlLabelText>Email</FormControlLabelText>
-          </FormControlLabel>
-          <Input>
-            <InputField
-              type="text"
-              placeholder="Email"
-              value={email}
-              onChangeText={(text) => setEmail(text)}
-            />
-          </Input>
-          <FormControlError>
-            <FormControlErrorIcon as={AlertCircleIcon} />
-            <FormControlErrorText>
-              An email is required
-            </FormControlErrorText>
-          </FormControlError>
-        </FormControl>
+    <View style={style.container}>
+      <TextInput
+        style={style.input}
+        value={email}
+        placeholder="Email"
+        textContentType="emailAddress"
+        onChangeText={setEmail}
+      />
 
-        <FormControl isInvalid={isPasswordInvalid} size="md" isDisabled={false} isReadOnly={false} isRequired={true} >
-          <FormControlLabel>
-            <FormControlLabelText>Password</FormControlLabelText>
-          </FormControlLabel>
-          <Input className="my-1" size="md">
-            <InputField
-              type="password"
-              placeholder="Password"
-              value={password}
-              onChangeText={(text) => setPassword(text)}
-            />
-          </Input>
-          <FormControlError>
-            <FormControlErrorIcon as={AlertCircleIcon} />
-            <FormControlErrorText>
-              Atleast 6 characters are required.
-            </FormControlErrorText>
-          </FormControlError>
-        </FormControl>
+      <TextInput
+        style={style.input}
+        value={password}
+        placeholder="Password"
+        textContentType="password"
+        onChangeText={setPassword}
+        secureTextEntry
+      />
 
-        <FormControl isInvalid={isConfirmPasswordInvalid} size="md" isDisabled={false} isReadOnly={false} isRequired={true} >
-          <FormControlLabel>
-            <FormControlLabelText>Confirm Password</FormControlLabelText>
-          </FormControlLabel>
-          <Input className="my-1" size="md">
-            <InputField
-              type="password"
-              placeholder="Confirm password"
-              value={confirmPassword}
-              onChangeText={(text) => setConfirmPassword(text)}
-            />
-          </Input>
-          <FormControlError>
-            <FormControlErrorIcon as={AlertCircleIcon} />
-            <FormControlErrorText>
-              Passwords must match
-            </FormControlErrorText>
-          </FormControlError>
-        </FormControl>
+      <TextInput
+        style={style.input}
+        value={confirmPassword}
+        placeholder="Confirm Password"
+        textContentType="password"
+        onChangeText={setConfirmPassword}
+        secureTextEntry
+      />
 
-        <FormControl isInvalid={authError !== null} size="md" isDisabled={false} isReadOnly={true} isRequired={false} >
-          <FormControlError>
-            <FormControlErrorIcon as={AlertCircleIcon} />
-            <FormControlErrorText>
-              An error occured. Please try again
-            </FormControlErrorText>
-          </FormControlError>
-        </FormControl>
-
-        <Button className="w-fit self-start mt-4" size="sm" onPress={onSubmit}>
-          <ButtonText>Create Account</ButtonText>
-        </Button>
-      </VStack>
-    </Center>
+      <Pressable style={style.saveButton} onPress={onSubmit}>
+        {isLoading ? <ActivityIndicator /> : <Text style={style.saveButtonText}>Create Account</Text>}
+      </Pressable>
+    </View>
   )
 }
