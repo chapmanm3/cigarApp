@@ -8,19 +8,15 @@ export function SessionContextProvider({ children }: PropsWithChildren) {
   const [session, setSession] = useState<Session | null>(null)
 
   useEffect(() => {
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      (event, session) => {
-        if (event === 'SIGNED_OUT') {
-          setSession(null)
-        } else if (session) {
-          setSession(session)
-          window.authToken = session.access_token
-        }
-      })
+    console.log("Session Updated!")
+  }, [session])
 
-    return () => {
-      subscription.unsubscribe()
-    }
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setSession(session)
+    })
+
+    supabase.auth.onAuthStateChange((_event, session) => setSession(session))
   }, [])
 
   return (

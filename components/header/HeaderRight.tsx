@@ -5,21 +5,22 @@ import { Menu, MenuItem, MenuItemLabel } from "@/components/ui/menu"
 import { supabase } from "@/utils/supabase"
 import { User } from "@supabase/supabase-js"
 import { Link, router } from "expo-router"
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import { Pressable } from "../ui/pressable"
+import { SessionContext } from "../contexts/UserContext"
 
 export const HeaderRight = () => {
   const [userInfo, setUserInfo] = useState<User | null>(null)
+  const sesssionContext = useContext(SessionContext)
 
   useEffect(() => {
-    const getUserInfo = async () => {
-      const userSession = await supabase.auth.getSession()
-      if (userSession.data.session?.user) {
-        setUserInfo(userSession.data.session?.user)
-      }
+    const userInfo = sesssionContext?.user
+    if (userInfo) {
+      setUserInfo(sesssionContext.user)
+    } else {
+      setUserInfo(null)
     }
-    getUserInfo()
-  }, [])
+  }, [sesssionContext])
 
   return (
     <Box className="m-2">
