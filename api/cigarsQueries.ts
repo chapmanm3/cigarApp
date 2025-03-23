@@ -37,3 +37,17 @@ export async function createNewCigar(cigar: CreateCigarObject): Promise<null> {
 
   return null
 }
+
+export async function deleteCigar(id: number): Promise<null> {
+  const { error } = await supabase
+    .from('cigars')
+    .delete()
+    .eq('id', id);
+
+  if (error) {
+    console.error(error)
+    throw error
+  }
+
+  return null
+}

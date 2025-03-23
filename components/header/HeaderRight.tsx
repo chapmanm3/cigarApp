@@ -22,7 +22,7 @@ export const HeaderRight = () => {
   }, [])
 
   return (
-    <Box className="mr-2">
+    <Box className="m-2">
       {userInfo !== null ?
         <UserAvatar user={userInfo} /> :
         <UserActionMenu />

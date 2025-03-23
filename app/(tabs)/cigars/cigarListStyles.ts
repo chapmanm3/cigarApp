@@ -3,21 +3,21 @@ import { StyleSheet } from 'react-native';
 const cigarListStyles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingHorizontal: 16,
-    paddingTop: 16,
+    paddingHorizontal: 8,
+    paddingTop: 8,
   },
   cigarItem: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingVertical: 12,
+    paddingVertical: 6,
     borderBottomWidth: 1,
     borderBottomColor: '#ddd', // Light border color
   },
   cigarImage: {
-    width: 80,
-    height: 80,
+    width: 60,
+    height: 60,
     borderRadius: 8,
-    marginRight: 16,
+    marginRight: 8,
   },
   cigarInfo: {
     flex: 1,

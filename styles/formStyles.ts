@@ -1,22 +1,14 @@
 import { StyleSheet } from "react-native";
 
-export const styles = StyleSheet.create({
+export const formStyles = StyleSheet.create({
+
   container: {
     flex: 1,
     padding: 16,
   },
-  imageContainer: {
-    alignItems: 'center',
-    marginBottom: 16,
-  },
-  image: {
-    width: 150,
-    height: 150,
-    borderRadius: 75,
-  },
   label: {
     fontSize: 16,
-    //fontWeight: 'bold',
+    fontWeight: 'bold',
     marginBottom: 8,
   },
   input: {
@@ -37,6 +29,4 @@ export const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
   },
-});
-
-
+})

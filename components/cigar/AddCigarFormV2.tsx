@@ -152,15 +152,17 @@ const AddCigarFormV2: React.FC<AddCigarScreenProps> = () => {
         <Picker.Item label="Strong" value="Strong" />
       </Picker>
 
+      {/*
       <Text style={styles.label}>Purchase Date:</Text>
       <Pressable
         style={styles.datePickerButton}
         onPress={() => setShowDatePicker(true)}
       >
         <Text>
-          {purchaseDate.toLocaleDateString()} {/* Display the date */}
+          {purchaseDate.toLocaleDateString()}
         </Text>
       </Pressable>
+      */}
 
       {showDatePicker && (
         <DateTimePicker

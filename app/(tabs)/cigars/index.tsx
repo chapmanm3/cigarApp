@@ -15,20 +15,20 @@ export default function Cigar() {
 
   const styles = cigarListStyles
 
-  useEffect(() => {
-    const fetchCigars = async () => {
-      setIsLoading(true)
-      try {
-        const cigars = await getAllCigarsSupabase()
-        setCigars(cigars)
-      } catch (e) {
-        console.error(e)
-        setCigars([])
-      } finally {
-        setIsLoading(false)
-      }
+  const fetchCigars = async () => {
+    setIsLoading(true)
+    try {
+      const cigars = await getAllCigarsSupabase()
+      setCigars(cigars)
+    } catch (e) {
+      console.error(e)
+      setCigars([])
+    } finally {
+      setIsLoading(false)
     }
+  }
 
+  useEffect(() => {
     fetchCigars()
   }, [userSession])
 
@@ -44,7 +44,7 @@ export default function Cigar() {
 
   return (
     <View style={styles.container}>
-      <CigarList cigars={cigars} />
+      <CigarList cigars={cigars} fetchFunction={fetchCigars} loading={isLoading} />
       <Pressable style={styles.addButton} onPress={onPressAddCigar}>
         <Text style={styles.addButtonText}>+</Text>
       </Pressable>
