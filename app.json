@@ -33,14 +33,6 @@
     },
     "plugins": [
       "expo-router",
-      [
-        "expo-asset",
-        {
-          "assets": [
-            "./assets/images/"
-          ]
-        }
-      ]
     ],
     "experiments": {
       "typedRoutes": true
