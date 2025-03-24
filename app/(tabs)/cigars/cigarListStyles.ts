@@ -4,7 +4,6 @@ const cigarListStyles = StyleSheet.create({
   container: {
     flex: 1,
     paddingHorizontal: 8,
-    paddingTop: 8,
   },
   cigarItem: {
     flexDirection: 'row',

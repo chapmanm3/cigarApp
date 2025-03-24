@@ -4,7 +4,7 @@ import { TabBarMaterial } from '@/components/navigation/TabBarMaterial';
 import { TabBarMaterialCommunity } from '@/components/navigation/TabBarMaterialCommunity';
 import { Box } from '@/components/ui/box';
 import { Tabs } from 'expo-router';
-import { Text } from 'react-native';
+import { Image, Text } from 'react-native';
 
 export default function TabLayout() {
   return (
@@ -16,14 +16,18 @@ export default function TabLayout() {
         headerTitleStyle: {
           color: "#333"
         },
+        headerTitle: "",
+
         tabBarStyle: {
           backgroundColor: "#f0f0f0"
         },
         tabBarActiveTintColor: "#654321",
         headerLeft: () => (
-          <Box className='ml-2'>
-            <Text>Embargo</Text>
-          </Box>
+          <Image style={{
+            width: 40,
+            height: 40,
+            margin: 6
+          }} source={require("@/assets/images/newIcon.png")} />
         ),
         headerRight: () => (
           <HeaderRight />
