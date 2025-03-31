@@ -97,11 +97,11 @@ const AddCigarFormV2: React.FC<AddCigarScreenProps> = () => {
     }
 
     const image = result.assets[0]
-    //const base64 = await FileSystem.readAsStringAsync(image.uri, { encoding: 'base64' });
+    const base64 = await FileSystem.readAsStringAsync(image.uri, { encoding: 'base64' });
     setImageUri(image.uri)
 
     try {
-      const imagePath = await uploadImage(image.uri)
+      const imagePath = await uploadImage(base64)
       setImagePath(imagePath)
       console.log("Successfully Uploaded Image")
     } catch (error) {

@@ -1,5 +1,6 @@
 import { QueryData } from "@supabase/supabase-js";
 import { getUserId, supabase } from "../utils/supabase";
+import { decode } from "base64-arraybuffer";
 
 ///.....Supabase queries.....///
 
@@ -52,11 +53,15 @@ export async function deleteCigar(id: number): Promise<null> {
   return null
 }
 
-export async function uploadImage(imageUri: string): Promise<string | null> {
+export async function uploadCigarImage(imageUri: string): Promise<string | null> {
   const userId = await getUserId()
   const filePath = `${userId}/${new Date().getTime()}.png`;
 
-  const { data, error } = await supabase.storage.from('cigars').upload(filePath, imageUri)
+  const options = {
+    contentType: 'image/png'
+  }
+
+  const { data, error } = await supabase.storage.from('cigars').upload(filePath, decode(imageUri), options)
 
   if (error) {
     console.error(error)
