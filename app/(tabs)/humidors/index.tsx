@@ -4,28 +4,28 @@ import { Spinner } from "@/components/ui/spinner";
 import { router } from "expo-router";
 import { useContext, useEffect, useState } from "react";
 import { Pressable, Text, View } from "react-native";
-import { humidorListStyles } from "./humidorListStyles";
 import { HumidorsList } from "./humidorList";
+import cigarListStyles from "../cigars/cigarListStyles";
 
 export default function Humidors() {
   const [isLoading, setIsLoading] = useState(true)
   const [humidors, setHumidors] = useState<UserHumidor[]>([])
   const userSession = useContext(SessionContext)
-  const styles = humidorListStyles
+  const styles = cigarListStyles
+
+  const fetchHumidors = async () => {
+    setIsLoading(true)
+    try {
+      const humidors = await getAllHumidorsSupabase()
+      setHumidors(humidors)
+    } catch (e) {
+      console.error(e)
+    } finally {
+      setIsLoading(false)
+    }
+  }
 
   useEffect(() => {
-    const fetchHumidors = async () => {
-      setIsLoading(true)
-      try {
-        const humidors = await getAllHumidorsSupabase()
-        setHumidors(humidors)
-      } catch (e) {
-        console.error(e)
-      } finally {
-        setIsLoading(false)
-      }
-    }
-
     fetchHumidors()
   }, [userSession])
 
@@ -41,7 +41,7 @@ export default function Humidors() {
 
   return (
     <View style={styles.container}>
-      <HumidorsList humidors={humidors} />
+      <HumidorsList humidors={humidors} fetchFunction={fetchHumidors} loading={isLoading} />
       <Pressable style={styles.addButton} onPress={onPressAddHumidorHandler}>
         <Text style={styles.addButtonText}>+</Text>
       </Pressable>

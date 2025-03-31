@@ -35,3 +35,14 @@ export async function createNewHumidor(humidor: CreateHumidorObject): Promise<nu
 
   return null
 }
+
+export async function deleteHumidor(id: number): Promise<null> {
+  const { error } = await supabase.from('humidors').delete().eq('id', id)
+
+  if (error) {
+    console.error(error)
+    throw error
+  }
+
+  return null
+}

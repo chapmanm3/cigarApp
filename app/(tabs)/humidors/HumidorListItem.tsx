@@ -1,6 +1,7 @@
 import { UserHumidor } from "@/api/humidorQueries"
 import { humidorListStyles } from "./humidorListStyles";
 import { Image, Text, TouchableOpacity, View } from "react-native";
+import cigarListStyles from "../cigars/cigarListStyles";
 
 interface Props {
   item: UserHumidor,
@@ -8,24 +9,24 @@ interface Props {
 }
 
 export const HumidorListItem = ({ item, onPressItem }: Props) => {
-  const styles = humidorListStyles;
+  const styles = cigarListStyles;
 
   return (
     <TouchableOpacity
       style={[
-        styles.humidorItem,
+        styles.cigarItem,
         // theme === 'dark' && styles.darkCigarItem, //Darkmode
       ]}
       onPress={() => onPressItem(item)}
     >
       <Image
         source={require("@/assets/images/newIcon.png")}
-        style={styles.humidorImage}
+        style={styles.cigarImage}
       />
-      <View style={styles.humidorInfo}>
+      <View style={styles.cigarInfo}>
         <Text
           style={[
-            styles.humidorName,
+            styles.cigarName,
             // theme === 'dark' && styles.darkCigarName, //Darkmode
           ]}
         >
@@ -33,7 +34,7 @@ export const HumidorListItem = ({ item, onPressItem }: Props) => {
         </Text>
         <Text
           style={[
-            styles.humidorDetails,
+            styles.cigarDetails,
             // theme === 'dark' && styles.darkCigarDetails, //Darkmode
           ]}
         >

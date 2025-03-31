@@ -19,7 +19,7 @@ export async function getAllCigarsSupabase(): Promise<UsersCigars> {
   return data
 }
 
-type CreateCigarObject = Omit<UserCigar, "created_at" | "updated_at" | "image_url" | "id" | "user_id">
+type CreateCigarObject = Omit<UserCigar, "created_at" | "updated_at" | "id" | "user_id">
 
 export async function createNewCigar(cigar: CreateCigarObject): Promise<null> {
   const userId = await getUserId()
@@ -51,3 +51,18 @@ export async function deleteCigar(id: number): Promise<null> {
 
   return null
 }
+
+export async function uploadImage(imageUri: string): Promise<string | null> {
+  const userId = await getUserId()
+  const filePath = `${userId}/${new Date().getTime()}.png`;
+
+  const { data, error } = await supabase.storage.from('cigars').upload(filePath, imageUri)
+
+  if (error) {
+    console.error(error)
+    throw error
+  }
+
+  return data.path
+}
+

@@ -9,8 +9,7 @@ import {
 } from 'react-native';
 import { detailsStyles } from './cigarDetailsStyles';
 import { router, useLocalSearchParams } from 'expo-router';
-import { UserCigar, deleteCigar } from '@/api/cigarsQueries';
-import { useRoute } from '@react-navigation/native';
+import { deleteCigar } from '@/api/cigarsQueries';
 
 interface CigarDetailScreenProps { }
 
