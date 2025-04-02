@@ -13,9 +13,8 @@ import { router } from 'expo-router';
 import * as ImagePicker from 'expo-image-picker';
 import * as FileSystem from 'expo-file-system'
 
-
-import { styles } from './CigarFormV2Styles';
-import { createNewCigar, uploadImage } from '@/api/cigarsQueries';
+import { createNewCigar } from '@/api/cigarsQueries';
+import { formStyles } from '@/styles/formStyles';
 
 interface AddCigarScreenProps { }
 
@@ -35,6 +34,8 @@ const AddCigarFormV2: React.FC<AddCigarScreenProps> = () => {
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [imagePath, setImagePath] = useState<string | null>(null)
   const [imageUri, setImageUri] = useState<string | null>(null)
+
+  const styles = formStyles
 
   const handleSaveCigar = async () => {
     // Implement client-side validation here
@@ -111,7 +112,6 @@ const AddCigarFormV2: React.FC<AddCigarScreenProps> = () => {
 
   return (
     <ScrollView style={styles.container}>
-
 
       <Pressable style={styles.saveButton} onPress={pickImage}>
         <Text style={styles.saveButtonText}>Add Image</Text>

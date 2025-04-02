@@ -10,6 +10,8 @@ import {
 import { detailsStyles } from './cigarDetailsStyles';
 import { router, useLocalSearchParams } from 'expo-router';
 import { deleteCigar } from '@/api/cigarsQueries';
+import { supabase } from '@/utils/supabase';
+import { useSupabaseImage } from '@/hooks/useSupabseImage';
 
 interface CigarDetailScreenProps { }
 
@@ -35,6 +37,7 @@ interface RouteParams {
 const CigarDetailScreen: React.FC<CigarDetailScreenProps> = () => {
   const { cigarString } = useLocalSearchParams<{ cigarString: string }>()
   const cigar = JSON.parse(cigarString)
+  const { imageUri } = useSupabaseImage(cigar.image_url)
 
   const styles = detailsStyles
 
@@ -74,8 +77,8 @@ const CigarDetailScreen: React.FC<CigarDetailScreenProps> = () => {
       <TouchableOpacity style={styles.imageContainer}>
         <Image
           source={
-            cigar.image_url
-              ? { uri: cigar.image_url }
+           imageUri 
+              ? { uri: imageUri}
               : require("@/assets/images/newIcon.png")
           }
           style={styles.image}
