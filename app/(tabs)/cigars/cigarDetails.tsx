@@ -15,25 +15,6 @@ import { useSupabaseImage } from '@/hooks/useSupabseImage';
 
 interface CigarDetailScreenProps { }
 
-interface RouteParams {
-  cigar: {
-    id: string;
-    name: string;
-    brand: string;
-    vitola: string;
-    origin: string;
-    wrapper: string;
-    binder: string;
-    filler: string;
-    strength: string;
-    purchase_date: string;
-    price: number;
-    quantity: number;
-    notes: string;
-    image_url?: string;
-  };
-}
-
 const CigarDetailScreen: React.FC<CigarDetailScreenProps> = () => {
   const { cigarString } = useLocalSearchParams<{ cigarString: string }>()
   const cigar = JSON.parse(cigarString)
@@ -69,7 +50,10 @@ const CigarDetailScreen: React.FC<CigarDetailScreenProps> = () => {
   };
 
   const handleEditCigar = () => {
-    //navigation.navigate('EditCigar', { cigar: cigar }); // Navigate to the edit screen
+    router.push({
+      pathname: '/cigars/editCigar',
+      params: { cigarString: JSON.stringify(cigar) }
+    });
   };
 
   return (
@@ -77,8 +61,8 @@ const CigarDetailScreen: React.FC<CigarDetailScreenProps> = () => {
       <TouchableOpacity style={styles.imageContainer}>
         <Image
           source={
-           imageUri 
-              ? { uri: imageUri}
+            imageUri
+              ? { uri: imageUri }
               : require("@/assets/images/newIcon.png")
           }
           style={styles.image}

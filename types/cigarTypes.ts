@@ -21,3 +21,4 @@ export type CigarForm = {
   name: string,
   description?: string,
 }
+

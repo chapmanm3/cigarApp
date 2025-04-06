@@ -9,6 +9,7 @@ export default function CigarsLayout() {
     >
       <Stack.Screen name="index" />
       <Stack.Screen name="addCigar" />
+      <Stack.Screen name="editCigar" />
     </Stack >
   )
 }

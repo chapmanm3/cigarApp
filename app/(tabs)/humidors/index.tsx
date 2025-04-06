@@ -1,9 +1,8 @@
 import { UserHumidor, getAllHumidorsSupabase } from "@/api/humidorQueries";
 import { SessionContext } from "@/components/contexts/UserContext";
-import { Spinner } from "@/components/ui/spinner";
 import { router } from "expo-router";
 import { useContext, useEffect, useState } from "react";
-import { Pressable, Text, View } from "react-native";
+import { ActivityIndicator, Pressable, Text, View } from "react-native";
 import { HumidorsList } from "./humidorList";
 import cigarListStyles from "../cigars/cigarListStyles";
 
@@ -35,7 +34,7 @@ export default function Humidors() {
 
   if (isLoading) {
     return (
-      <Spinner />
+      <ActivityIndicator />
     )
   }
 

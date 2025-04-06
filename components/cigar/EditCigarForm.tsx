@@ -1,39 +1,35 @@
-import React, { useState } from 'react';
-import {
-  Text,
-  TextInput,
-  ScrollView,
-  Alert,
-  Pressable,
-  Image,
-} from 'react-native';
-import { Picker } from '@react-native-picker/picker';
+import { formStyles } from "@/styles/formStyles";
+import { router, useLocalSearchParams } from "expo-router";
+import { useState } from "react";
+import { Alert, Image, Pressable, ScrollView, Text, TextInput } from "react-native";
 import DateTimePicker from '@react-native-community/datetimepicker';
-import { router } from 'expo-router';
+
 import * as ImagePicker from 'expo-image-picker';
 import * as FileSystem from 'expo-file-system'
+import { Picker } from "@react-native-picker/picker";
+import { UserCigar, updateCigar, uploadCigarImage } from "@/api/cigarsQueries";
 
-import { createNewCigar, uploadCigarImage } from '@/api/cigarsQueries';
-import { formStyles } from '@/styles/formStyles';
 
-interface AddCigarScreenProps { }
+interface EditCigarFormInnerProps {
+  cigar: UserCigar
+}
 
-const AddCigarFormV2: React.FC<AddCigarScreenProps> = () => {
-  const [name, setName] = useState('');
-  const [brand, setBrand] = useState('');
-  const [vitola, setVitola] = useState('');
-  const [origin, setOrigin] = useState('');
-  const [wrapper, setWrapper] = useState('');
-  const [binder, setBinder] = useState('');
-  const [filler, setFiller] = useState('');
-  const [strength, setStrength] = useState('Medium');
-  const [purchaseDate, setPurchaseDate] = useState(new Date());
-  const [price, setPrice] = useState('');
-  const [quantity, setQuantity] = useState('');
-  const [notes, setNotes] = useState('');
+function EditCigarFormInner({ cigar }: EditCigarFormInnerProps) {
+  const [name, setName] = useState(cigar.name ?? '');
+  const [brand, setBrand] = useState(cigar.brand ?? '');
+  const [vitola, setVitola] = useState(cigar.vitola ?? '');
+  const [origin, setOrigin] = useState(cigar.origin ?? '');
+  const [wrapper, setWrapper] = useState(cigar.wrapper ?? '');
+  const [binder, setBinder] = useState(cigar.binder ?? '');
+  const [filler, setFiller] = useState(cigar.filler ?? '');
+  const [strength, setStrength] = useState(cigar.strength ?? '');
+  const [purchaseDate, setPurchaseDate] = useState(cigar.purchase_date ?? '');
+  const [price, setPrice] = useState(cigar.price?.toString() ?? '');
+  const [quantity, setQuantity] = useState(cigar.quantity?.toString() ?? '');
+  const [notes, setNotes] = useState(cigar.notes ?? '');
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [imagePath, setImagePath] = useState<string | null>(null)
-  const [imageUri, setImageUri] = useState<string | null>(null)
+  const [imageUri, setImageUri] = useState<string | null>(cigar.image_url)
 
   const styles = formStyles
 
@@ -45,17 +41,11 @@ const AddCigarFormV2: React.FC<AddCigarScreenProps> = () => {
     }
 
     // Convert price and quantity to numbers
-    const priceNumber = parseFloat(price);
-    const quantityNumber = parseInt(quantity, 10);
-
-    if (isNaN(priceNumber) || isNaN(quantityNumber)) {
-      Alert.alert('Error', 'Price and Quantity must be valid numbers.');
-      return;
-    }
 
     try {
       // Prepare the data to be sent to Supabase
       const newCigar = {
+        ...cigar,
         name,
         brand,
         vitola,
@@ -64,19 +54,19 @@ const AddCigarFormV2: React.FC<AddCigarScreenProps> = () => {
         binder,
         filler,
         strength,
-        purchase_date: purchaseDate.toISOString(), // Convert to ISO string
-        price: priceNumber,
-        quantity: quantityNumber,
+        purchase_date: purchaseDate ? purchaseDate : cigar.purchase_date,
+        price: parseInt(price),
+        quantity: parseInt(quantity),
         notes,
         image_url: imagePath
       };
 
-      await createNewCigar(newCigar)
+      await updateCigar(newCigar)
       console.log(newCigar);
-      Alert.alert('Success', 'Cigar saved successfully!');
+      Alert.alert('Success', 'Cigar updated successfully!');
       router.back()
     } catch (error: any) {
-      console.error('Unexpected error saving cigar:', error);
+      console.error('Unexpected error updating cigar:', error);
       Alert.alert(
         'Error',
         'An unexpected error occurred. Please try again later.',
@@ -85,7 +75,7 @@ const AddCigarFormV2: React.FC<AddCigarScreenProps> = () => {
   };
 
   const onDateChange = (event: any, selectedDate: Date | undefined) => {
-    const currentDate = selectedDate || purchaseDate;
+    const currentDate = selectedDate?.toISOString() || purchaseDate;
     setShowDatePicker(false);
     setPurchaseDate(currentDate);
   };
@@ -200,7 +190,7 @@ const AddCigarFormV2: React.FC<AddCigarScreenProps> = () => {
       {showDatePicker && (
         <DateTimePicker
           testID="dateTimePicker"
-          value={purchaseDate}
+          value={new Date(purchaseDate)}
           mode="date"
           is24Hour={true}
           display="default"
@@ -243,4 +233,12 @@ const AddCigarFormV2: React.FC<AddCigarScreenProps> = () => {
   );
 };
 
-export default AddCigarFormV2;
+export function EditCigarFormWrapper() {
+  const { cigarString } = useLocalSearchParams<{ cigarString: string }>()
+  console.log(cigarString)
+  const cigar: UserCigar = JSON.parse(cigarString)
+
+  return (
+    <EditCigarFormInner cigar={cigar} />
+  )
+}

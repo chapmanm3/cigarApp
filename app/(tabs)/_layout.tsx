@@ -2,9 +2,8 @@ import { HeaderRight } from '@/components/header/HeaderRight';
 import { TabBarIcon } from '@/components/navigation/TabBarIcon';
 import { TabBarMaterial } from '@/components/navigation/TabBarMaterial';
 import { TabBarMaterialCommunity } from '@/components/navigation/TabBarMaterialCommunity';
-import { Box } from '@/components/ui/box';
 import { Tabs } from 'expo-router';
-import { Image, Text } from 'react-native';
+import { Image } from 'react-native';
 
 export default function TabLayout() {
   return (

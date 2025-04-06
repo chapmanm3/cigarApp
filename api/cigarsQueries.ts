@@ -53,6 +53,24 @@ export async function deleteCigar(id: number): Promise<null> {
   return null
 }
 
+export async function updateCigar(cigar: UserCigar) {
+  const userId = await getUserId()
+
+  const cigarUpdate = {
+    ...cigar,
+    updated_at: new Date().toString()
+  }
+
+  const { error } = await supabase.from("cigars").upsert(cigarUpdate)
+
+  if (error) {
+    console.error(error)
+    throw error
+  }
+
+  return null
+}
+
 export async function uploadCigarImage(imageUri: string): Promise<string | null> {
   const userId = await getUserId()
   const filePath = `${userId}/${new Date().getTime()}.png`;

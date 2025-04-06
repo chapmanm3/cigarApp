@@ -10,9 +10,9 @@ export const detailsStyles = StyleSheet.create({
     marginBottom: 16,
   },
   image: {
-    width: 200,
-    height: 200,
-    borderRadius: 100,
+    width: "100%",
+    aspectRatio: 1,
+    //borderRadius: 16,
   },
   detailsContainer: {
     marginBottom: 24,

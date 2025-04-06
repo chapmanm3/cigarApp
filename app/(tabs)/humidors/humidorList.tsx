@@ -3,8 +3,6 @@ import {
   FlatList, RefreshControl, Text,
 } from 'react-native';
 // Import either cigarListStyles or cigarGridStyles depending on the selected layout
-import { CigarListItem } from './cigarListItem';
-import { UserCigar, UsersCigars } from '@/api/cigarsQueries';
 import { UserHumidor, UsersHumidors } from '@/api/humidorQueries';
 import { HumidorListItem } from './HumidorListItem';
 import { router } from 'expo-router';
